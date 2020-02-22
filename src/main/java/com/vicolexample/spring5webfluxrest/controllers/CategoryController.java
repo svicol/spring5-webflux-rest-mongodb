@@ -2,8 +2,13 @@ package com.vicolexample.spring5webfluxrest.controllers;
 
 import com.vicolexample.spring5webfluxrest.domain.Category;
 import com.vicolexample.spring5webfluxrest.repositories.CategoryRepository;
+import org.reactivestreams.Publisher;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -24,6 +29,12 @@ public class CategoryController {
     @GetMapping("/api/v1/categories/{id}")
     public Mono<Category> getById(@PathVariable String id){
         return categoryRepository.findById(id);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/api/v1/categories")
+    Mono<Void> create(@RequestBody Publisher<Category> categoryPublisher){
+        return categoryRepository.saveAll(categoryPublisher).then();
     }
 
 }
