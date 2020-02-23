@@ -49,7 +49,7 @@ public class CategoryController {
     Mono<Category> patch(@PathVariable String id, @RequestBody Category category){
         Category existingCategory = categoryRepository.findById(id).block();
 
-        if(existingCategory.getDescription() != category.getDescription()){
+        if(!existingCategory.getDescription().equals(category.getDescription())){
             existingCategory.setDescription(category.getDescription());
 
             return categoryRepository.save(existingCategory);

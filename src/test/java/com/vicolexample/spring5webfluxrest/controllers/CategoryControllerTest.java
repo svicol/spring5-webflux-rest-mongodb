@@ -101,11 +101,11 @@ class CategoryControllerTest {
     @Test
     void testPatchCategoryNoChanges() {
         given(categoryRepository.findById(anyString()))
-                .willReturn(Mono.just(Category.builder().build()));
+                .willReturn(Mono.just(Category.builder().description("Description").build()));
         given(categoryRepository.save(any(Category.class)))
                 .willReturn(Mono.just(Category.builder().build()));
 
-        Mono<Category> categoryToPatchMono = Mono.just(Category.builder().build());
+        Mono<Category> categoryToPatchMono = Mono.just(Category.builder().description("Description").build());
 
         webTestClient.patch()
                 .uri("/api/v1/categories/id")

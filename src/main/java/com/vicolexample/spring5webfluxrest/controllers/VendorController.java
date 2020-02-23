@@ -49,11 +49,11 @@ public class VendorController {
     Mono<Vendor> patch(@PathVariable String id, @RequestBody Vendor vendor){
         Vendor existingVendor = vendorRepository.findById(id).block();
         boolean hasUpdates = false;
-        if(existingVendor.getFirstName() != vendor.getFirstName()){
+        if(!existingVendor.getFirstName().equals(vendor.getFirstName())){
             existingVendor.setFirstName(vendor.getFirstName());
             hasUpdates = true;
         }
-        if(existingVendor.getLastName() != vendor.getLastName()){
+        if(!existingVendor.getLastName().equals(vendor.getLastName())){
             existingVendor.setLastName(vendor.getLastName());
             hasUpdates = true;
         }
