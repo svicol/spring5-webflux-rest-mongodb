@@ -75,6 +75,5 @@ class CategoryControllerTest {
                 .exchange()
                 .expectStatus()
                 .isOk();
-
     }
 }
