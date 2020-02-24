@@ -2,6 +2,7 @@ package com.vicolexample.spring5webfluxrest.controllers;
 
 import com.vicolexample.spring5webfluxrest.domain.Vendor;
 import com.vicolexample.spring5webfluxrest.repositories.VendorRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.reactivestreams.Publisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,11 +50,11 @@ public class VendorController {
     Mono<Vendor> patch(@PathVariable String id, @RequestBody Vendor vendor){
         Vendor existingVendor = vendorRepository.findById(id).block();
         boolean hasUpdates = false;
-        if(!existingVendor.getFirstName().equals(vendor.getFirstName())){
+        if(!StringUtils.equals(vendor.getFirstName(), existingVendor.getFirstName())){
             existingVendor.setFirstName(vendor.getFirstName());
             hasUpdates = true;
         }
-        if(!existingVendor.getLastName().equals(vendor.getLastName())){
+        if(!StringUtils.equals(vendor.getLastName(), existingVendor.getLastName())){
             existingVendor.setLastName(vendor.getLastName());
             hasUpdates = true;
         }

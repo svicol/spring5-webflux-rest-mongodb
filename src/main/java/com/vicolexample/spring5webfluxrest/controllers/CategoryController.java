@@ -2,6 +2,7 @@ package com.vicolexample.spring5webfluxrest.controllers;
 
 import com.vicolexample.spring5webfluxrest.domain.Category;
 import com.vicolexample.spring5webfluxrest.repositories.CategoryRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.reactivestreams.Publisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,7 +50,7 @@ public class CategoryController {
     Mono<Category> patch(@PathVariable String id, @RequestBody Category category){
         Category existingCategory = categoryRepository.findById(id).block();
 
-        if(!existingCategory.getDescription().equals(category.getDescription())){
+        if(!StringUtils.equals(existingCategory.getDescription(), category.getDescription())){
             existingCategory.setDescription(category.getDescription());
 
             return categoryRepository.save(existingCategory);
